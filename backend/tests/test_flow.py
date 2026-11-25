@@ -156,3 +156,11 @@ def test_resume_is_read_before_there_is_an_account(client):
     assert codes[-1] == 429 and codes[:-1] == [200] * (resume.READS_PER_ADDRESS - 1)
     resume._reads.clear()
 
+
+def test_test_mode_tools_are_hidden_on_a_public_address(client):
+    assert client.get("/v1/dev/outbox").status_code == 200
+    assert client.get("/v1/dev/outbox", headers={"host": "localhost:8000", "x-forwarded-host": "localhost:3000"}).status_code == 200  # the website
+    for headers in ({"host": "someone.ngrok-free.dev"}, {"host": "someone.ngrok-free.dev", "x-forwarded-host": "localhost"},
+                    {"host": "localhost:8000", "x-forwarded-host": "someone.ngrok-free.dev"}):
+        assert client.get("/v1/dev/outbox", headers=headers).status_code == 404
+

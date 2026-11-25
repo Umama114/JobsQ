@@ -185,6 +185,8 @@ For every job, **Find referrals** then lists the people you already know at that
    Keep `messages` subscribed.
 5. From your phone, send `find jobs` to the test number.
 
+While ngrok is on, only the backend is reachable from outside, and the test-mode tools (dev inbox, test plan buttons) are switched off for that address. This is still a development setup: stop ngrok when you're not testing.
+
 Meta's test number can only message the numbers on its recipient list (up to five).
 
 ## What's inside

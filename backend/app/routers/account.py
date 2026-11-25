@@ -2,7 +2,7 @@
 
 Payments are not built yet. In DEV_MODE the dashboard has test buttons instead:
 activate a plan (as if paid), end it, and suspend the account, so every access level can be tried."""
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from .. import config, db, worker
 from ..access import access_for
@@ -56,14 +56,21 @@ class SuspendIn(BaseModel):
     suspended: bool
 
 
-def _dev_only():
-    if not config.DEV_MODE:
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "[::1]", "testserver"}  # testserver: the name the automated tests use
+
+
+def _dev_only(request: Request):
+    """Test-mode tools work only on this computer. Through a public address (ngrok, used for WhatsApp) they don't exist,
+    so nobody else can read the dev inbox (it holds password reset links) or start a free test plan."""
+    hosts = [request.headers.get("host", ""), *request.headers.get("x-forwarded-host", "").split(",")]
+    names = [h.strip().lower() if h.strip().endswith("]") else h.strip().lower().rsplit(":", 1)[0] for h in hosts if h.strip()]
+    if not config.DEV_MODE or not names or any(n not in LOCAL_HOSTS for n in names):
         raise HTTPException(404, "Not found")
 
 
 @router.post("/v1/dev/activate-plan")
-def activate(body: ActivateIn, user: dict = Depends(current_user)):
-    _dev_only()
+def activate(body: ActivateIn, request: Request, user: dict = Depends(current_user)):
+    _dev_only(request)
     if not user["email_verified_at"]:
         raise HTTPException(403, "Confirm your email first.")
     if not db.one("select 1 from plans where code = %s", (body.plan_code,)):
@@ -79,9 +86,9 @@ def activate(body: ActivateIn, user: dict = Depends(current_user)):
 
 
 @router.post("/v1/dev/end-plan")
-def end_plan(user: dict = Depends(current_user)):
+def end_plan(request: Request, user: dict = Depends(current_user)):
     """Moves the end date into the past, as if the plan lapsed. The status stays 'active': access is worked out from the date."""
-    _dev_only()
+    _dev_only(request)
     db.run(
         "update subscriptions set current_period_end = now() - interval '1 minute', grace_until = null, extended_until = null "
         "where user_id = %s and status in ('active', 'past_due')",
@@ -91,13 +98,13 @@ def end_plan(user: dict = Depends(current_user)):
 
 
 @router.post("/v1/dev/suspend")
-def suspend(body: SuspendIn, user: dict = Depends(current_user)):
-    _dev_only()
+def suspend(body: SuspendIn, request: Request, user: dict = Depends(current_user)):
+    _dev_only(request)
     db.run("update users set status = %s where id = %s", ("suspended" if body.suspended else "active", user["id"]))
     return {"ok": True, "access": access_for(user["id"])}
 
 
 @router.get("/v1/dev/outbox")
-def outbox():
-    _dev_only()
+def outbox(request: Request):
+    _dev_only(request)
     return db.all_rows("select id, to_email, subject, body, created_at from email_outbox order by id desc limit 20")
