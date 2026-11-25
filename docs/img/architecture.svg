@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect width="680" height="440" fill="#ffffff"/>
+
+<rect x="40" y="30" width="200" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+<text x="140" y="52" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#3C3489">Website (Next.js)</text>
+<text x="140" y="70" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">Sign up, resume, apply</text>
+
+<rect x="440" y="30" width="200" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+<text x="540" y="52" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#3C3489">WhatsApp / Discord</text>
+<text x="540" y="70" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">Where users chat</text>
+
+<rect x="40" y="130" width="200" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="140" y="152" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#085041">API server (FastAPI)</text>
+<text x="140" y="170" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">Front door for everything</text>
+
+<rect x="440" y="130" width="200" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.8"/>
+<text x="540" y="152" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#444441">Meta Cloud API</text>
+<text x="540" y="170" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#5F5E5A">Discord is planned</text>
+
+<rect x="40" y="230" width="200" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="140" y="252" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#085041">Message engine</text>
+<text x="140" y="270" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">Checks plan, picks agent</text>
+
+<rect x="440" y="230" width="200" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.8"/>
+<text x="540" y="252" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#444441">PostgreSQL</text>
+<text x="540" y="270" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#5F5E5A">Users, plans, jobs, drafts</text>
+
+<rect x="40" y="330" width="200" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="140" y="352" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#085041">Six AI agents</text>
+<text x="140" y="370" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">Code steps plus AI calls</text>
+
+<rect x="440" y="330" width="200" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.8"/>
+<text x="540" y="352" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="600" fill="#444441">Outside services</text>
+<text x="540" y="370" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#5F5E5A">Claude, job search, email</text>
+
+<line x1="140" y1="86" x2="140" y2="128" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="540" y1="86" x2="540" y2="128" stroke="#888780" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="242" y1="158" x2="438" y2="158" stroke="#888780" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="140" y1="186" x2="140" y2="228" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="140" y1="286" x2="140" y2="328" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="242" y1="258" x2="438" y2="258" stroke="#888780" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="242" y1="358" x2="438" y2="358" stroke="#888780" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+
+<text x="340" y="420" text-anchor="middle" font-size="12" fill="#5F5E5A">Purple: what users touch. Teal: our backend. Gray: stored data and outside services.</text>
+</svg>

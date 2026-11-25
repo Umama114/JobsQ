@@ -1,0 +1,45 @@
+# JobsQ: PostgreSQL + the FastAPI backend + the PDF printer. The website runs separately (npm --prefix frontend run dev).
+name: jobsq
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: jobsq
+      POSTGRES_PASSWORD: jobsq_dev_only
+      POSTGRES_DB: jobsq
+    ports:
+      - "5433:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jobsq -d jobsq"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./backend
+    image: jobsq-api
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://jobsq:jobsq_dev_only@db:5432/jobsq
+      UPLOAD_DIR: /data/uploads
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - uploads:/data/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      gotenberg:
+        condition: service_started
+
+  gotenberg:                                    # prints the tailored resume HTML to PDF
+    image: gotenberg/gotenberg:8
+
+volumes:
+  dbdata:                        # created automatically; the name is kept from earlier so no data is lost
+    name: jobsq_first_dbdata
+  uploads:
+    name: jobsq_first_uploads
